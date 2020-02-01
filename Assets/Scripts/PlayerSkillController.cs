@@ -51,8 +51,17 @@ public class PlayerSkillController : MonoBehaviour
 
     private void useDash()
     {
-        
+        disableAllControls();
 
+        // calculate dash movement with smoothdamp
+        float moveDirection = 1f;   // 1 = right, -1 = left; default as facing right
+        if (!player.facingRight)
+            moveDirection = -1f;
+
+        /*float targetXPosition = moveDirection * moveSpeed;
+        if (sprintHeld) targetXPosition *= 1.5f;
+        bodyVelocity.x = Mathf.SmoothDamp(bodyVelocity.x, targetXPosition, ref velocityXSmoothing, moveSmoothing);
+        player.Move*/
     }
 
 }

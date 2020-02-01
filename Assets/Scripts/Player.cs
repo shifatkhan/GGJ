@@ -10,14 +10,16 @@ public class Player : MonoBehaviour
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /* EDITABLE IN INSPECTOR */
-    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float moveSmoothing = 0.01f;           // time that takes to move character (read docs on SmoothDamp)
-    [SerializeField] protected float jumpForce = 17;
+    [SerializeField] private float sprintMultiplier = 1.5f;         // multiply moving speed when sprinting
+    [SerializeField] private float jumpForce = 17;
     [SerializeField] private float lowJumpGravityMultiplier = 6f;   // make jump low by increasing gravity on character
 
     /* FIELDS PUBLIC FOR OTHER SCRIPTS */
     [HideInInspector] public bool onGround;
     [HideInInspector] public bool disableControls = false;
+    [HideInInspector] public bool facingRight;
 
     // COMPONENTS, SCRIPTS, AND OBJECT REFERENCES
     protected RaycastController raycastController;
@@ -28,7 +30,7 @@ public class Player : MonoBehaviour
     protected Vector2 bodyVelocity;
     private float gravity;                          // general gravity on body
 
-    protected float moveDirection = 0f;               // direction in which character is moving
+    protected float moveDirection = 0f;             // direction in which character is moving
     private float velocityXSmoothing;               // a reference for SmoothDamp method to use
     private bool sprintHeld = false;
 
@@ -123,7 +125,7 @@ public class Player : MonoBehaviour
         bodyVelocity.y += gravity * Time.deltaTime;
         // calculate horizontal movement with smoothdamp
         float targetXPosition = moveDirection * moveSpeed;
-        if (sprintHeld) targetXPosition *= 1.5f;
+        if (sprintHeld) targetXPosition *= sprintMultiplier;
         bodyVelocity.x = Mathf.SmoothDamp(bodyVelocity.x, targetXPosition, ref velocityXSmoothing, moveSmoothing); // Params: current position, target position, current velocity (modified by func), time to reach target (smaller = faster)
 
         // modify player's falling gravity if jumping
@@ -187,6 +189,7 @@ public class Player : MonoBehaviour
         raycastController.collision.collDirection = (int)Mathf.Sign(moveDirection);
         // flip sprite
         spriteRenderer.flipX = !spriteRenderer.flipX;
+        facingRight = spriteRenderer.flipX;
     }
 
     // This method checks the state of the player game object every frame
