@@ -10,25 +10,30 @@ public class Player : MonoBehaviour
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /* EDITABLE IN INSPECTOR */
-    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float moveSmoothing = 0.01f;           // time that takes to move character (read docs on SmoothDamp)
+    [SerializeField] private float sprintMultiplier = 1.5f;         // multiply moving speed when sprinting
     [SerializeField] private float jumpForce = 17;
     [SerializeField] private float lowJumpGravityMultiplier = 6f;   // make jump low by increasing gravity on character
 
     /* FIELDS PUBLIC FOR OTHER SCRIPTS */
     [HideInInspector] public bool onGround;
+    [HideInInspector] public bool disableControls = false;
+    [HideInInspector] public bool facingRight;
 
     // COMPONENTS, SCRIPTS, AND OBJECT REFERENCES
-    private RaycastController raycastController;
-    private SpriteRenderer spriteRenderer;
-    private Animator animator;
+    protected RaycastController raycastController;
+    protected SpriteRenderer spriteRenderer;
+    protected Animator animator;
+    protected Rigidbody2D rBody;
     //private DinoSoundPlayer charSfxPlayer;
     // INTERNAL INSTANCE MEMBERS
-    private Vector2 bodyVelocity;
+    protected Vector2 bodyVelocity;
     private float gravity;                          // general gravity on body
 
-    private float moveDirection = 0f;               // direction in which character is moving
+    protected float moveDirection = 0f;             // direction in which character is moving
     private float velocityXSmoothing;               // a reference for SmoothDamp method to use
+    private bool sprintHeld = false;
 
     private bool jumpPressed = false;
     private bool isJumping = false;            
@@ -51,6 +56,7 @@ public class Player : MonoBehaviour
         raycastController = GetComponent<RaycastController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        rBody = GetComponent<Rigidbody2D>();
         //charSfxPlayer = GetComponent<DinoSoundPlayer>();
     }
 
@@ -98,21 +104,26 @@ public class Player : MonoBehaviour
     // Get player's input to determine action states
     private void GetPlayerInput()
     {
-        moveDirection = Input.GetAxisRaw("Horizontal");     // 1 = moving right, -1 = moving left, 0 = idle
-        if (Input.GetButtonDown("Jump"))
-            jumpPressed = true;
-        //if (Input.GetButtonDown("Interact"))
-        //    interactPressed = true;
-        //animator.SetBool("isCrouching", Input.GetButton("Crouch"));
+        if(!disableControls)
+        {
+            moveDirection = Input.GetAxisRaw("Horizontal");     // 1 = moving right, -1 = moving left, 0 = idle
+            sprintHeld = Input.GetButton("Sprint");
+            if (Input.GetButtonDown("Jump"))
+                jumpPressed = true;
+            //if (Input.GetButtonDown("Interact"))
+            //    interactPressed = true;
+            //animator.SetBool("isCrouching", Input.GetButton("Crouch"));
+        }
     }
 
     // Calculate the velocity of player's game object based their state
-    private void calcBodyVelocity()
+    protected void calcBodyVelocity()
     {
         // gravity makes game object fall at all times
         bodyVelocity.y += gravity * Time.deltaTime;
         // calculate horizontal movement with smoothdamp
         float targetXPosition = moveDirection * moveSpeed;
+        if (sprintHeld) targetXPosition *= sprintMultiplier;
         bodyVelocity.x = Mathf.SmoothDamp(bodyVelocity.x, targetXPosition, ref velocityXSmoothing, moveSmoothing); // Params: current position, target position, current velocity (modified by func), time to reach target (smaller = faster)
 
         // modify player's falling gravity if jumping
@@ -148,7 +159,7 @@ public class Player : MonoBehaviour
 		transform.Translate(moveAmount);
 	}
 
-    private void OnJumpDown()
+    protected void OnJumpDown()
     {
         //onGround = raycastController.collision.below
         if (onGround)
@@ -176,10 +187,11 @@ public class Player : MonoBehaviour
         raycastController.collision.collDirection = (int)Mathf.Sign(moveDirection);
         // flip sprite
         spriteRenderer.flipX = !spriteRenderer.flipX;
+        facingRight = !spriteRenderer.flipX;
     }
 
     // This method checks the state of the player game object every frame
-    private void CheckState ()
+    protected void CheckState ()
 	{
         onGround = raycastController.collision.below;
 
@@ -201,13 +213,30 @@ public class Player : MonoBehaviour
 		spriteRenderer.color = c;
 	}
 
-	
+    // Push the rigid body of player
+    public void pushBody(Vector2 direction, float force, float animTime)
+    {
+        // temporarily activate rigidbody's physics and disable after animation
+        StartCoroutine(tempAddRigidBodyWeight(animTime));
+        rBody.AddForce(direction * force);
+    }
 
-	/// <summary>
-	/// Resets the invincble boolean. Used by OnTriggerEnter2D, to return player to vulnerable state 
-	/// after slight moment of invincibility.
-	/// </summary>
-	private void resetInvincible ()
+    IEnumerator tempAddRigidBodyWeight(float time)
+    {
+        rBody.mass = 1f;
+        yield return new WaitForSeconds(time);
+        rBody.mass = 0.0001f;
+    }
+
+
+
+
+
+    /// <summary>
+    /// Resets the invincble boolean. Used by OnTriggerEnter2D, to return player to vulnerable state 
+    /// after slight moment of invincibility.
+    /// </summary>
+    private void resetInvincible ()
 	{
 		invincible = false;
 	}
