@@ -8,7 +8,9 @@ public class PlayerSkillController : MonoBehaviour
     private bool disableSkills = false;
 
     // Skill states
-    private bool tabPressed = false;
+    private bool dashPressed = false;
+    private bool transcendPressed = false;
+    private float transcendPressTime;
 
     private void Awake()
     {
@@ -25,15 +27,29 @@ public class PlayerSkillController : MonoBehaviour
     void Update()
     {
         if (Input.GetButtonDown("Tab"))
-            tabPressed = true;
+            dashPressed = true;
+
+
+        /*if (Input.GetButtonDown("Transcend"))
+            transcendPressTime = Time.time;
+        else if (Input.GetButton("Transcend") && Time.time - transcendPressTime > 4 && )
+        {  // held longer than 1.5 seconds
+            useTranscend();
+            transcendPressTime = 0f;
+        }
+        else
+        {
+            transcendPressTime = float.PositiveInfinity;
+
+        }*/
     }
 
     void FixedUpdate()
     {
         if(!disableSkills)
         {
-            if (tabPressed) useDash();
-            tabPressed = false;
+            if (dashPressed) useDash();
+            dashPressed = false;
         }
     }
 
@@ -51,7 +67,7 @@ public class PlayerSkillController : MonoBehaviour
 
     private void resetAllSkillInputs()
     {
-        tabPressed = false;
+        dashPressed = false;
     }
 
     private void useDash()
@@ -69,6 +85,11 @@ public class PlayerSkillController : MonoBehaviour
         StartCoroutine(suspendControls(animationTime));
         // add force to player's rigid body
         player.pushBody(bodyVelocity, 1000f, animationTime);
+    }
+
+    private void useTranscend()
+    {
+        Debug.Log("SWITCHU");
     }
 
     IEnumerator suspendControls(float time)
