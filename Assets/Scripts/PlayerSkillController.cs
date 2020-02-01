@@ -8,7 +8,9 @@ public class PlayerSkillController : MonoBehaviour
     private bool disableSkills = false;
 
     // Skill states
-    private bool tabPressed = false;
+    private bool dashPressed = false;
+    private bool transcendPressed = false;
+    private float transcendPressTime;
 
     private void Awake()
     {
@@ -25,15 +27,15 @@ public class PlayerSkillController : MonoBehaviour
     void Update()
     {
         if (Input.GetButtonDown("Tab"))
-            tabPressed = true;
+            dashPressed = true;
     }
 
     void FixedUpdate()
     {
         if(!disableSkills)
         {
-            if (tabPressed) useDash();
-            tabPressed = false;
+            if (dashPressed) useDash();
+            dashPressed = false;
         }
     }
 
@@ -51,7 +53,7 @@ public class PlayerSkillController : MonoBehaviour
 
     private void resetAllSkillInputs()
     {
-        tabPressed = false;
+        dashPressed = false;
     }
 
     private void useDash()
