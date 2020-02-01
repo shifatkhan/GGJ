@@ -190,8 +190,6 @@ public class Player : MonoBehaviour
             bodyVelocity.y = 0f;
             isJumping = false;
         }
-            
-
 		//Apparantly, Color isn't something you can modify like transform.position
 		//Reduce transparency by half when hurt.
 		Color c = spriteRenderer.color;

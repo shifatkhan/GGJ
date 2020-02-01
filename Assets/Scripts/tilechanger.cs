@@ -10,7 +10,6 @@ public class tilechanger : MonoBehaviour
     private bool isRepairedGrid;
 
     //Variables to control the karma/duration of other world swap
-    //Add to Player Script????
     private int karma;
     private int karmaCost = 20;
     private int karmaUsage = 1; //Change to a timed system or smth
@@ -21,7 +20,7 @@ public class tilechanger : MonoBehaviour
         badGrid.SetActive(true);
         repairedGrid.SetActive(false);
 
-        //Change later
+        //Change base karma later
         karma = 100;
     }
 

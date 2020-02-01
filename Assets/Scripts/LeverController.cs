@@ -14,7 +14,7 @@ public class LeverController : MonoBehaviour
     }
     private void Update()
     {
-        if (interactAllowed && Input.GetButtonDown("Interact"))
+        if (interactAllowed && Input.GetKeyDown("r"))
         {
             UseLever();
         }
@@ -29,7 +29,6 @@ public class LeverController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             interactAllowed = true;
-            Debug.Log("Hello");
         }
     }
     private void OnTriggerExit2D(Collider2D other)
