@@ -6,7 +6,6 @@ public class EnemyAttack : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log("ATACK");
         if (collider.gameObject.CompareTag("Player"))
         {
             EnemyGround.isAttacking = true;
@@ -20,4 +19,6 @@ public class EnemyAttack : MonoBehaviour
             EnemyGround.isAttacking = false;
         }
     }
+
+    
 }
