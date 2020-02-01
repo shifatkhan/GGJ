@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     /* EDITABLE IN INSPECTOR */
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float moveSmoothing = 0.01f;           // time that takes to move character (read docs on SmoothDamp)
-    [SerializeField] private float jumpForce = 17;
+    [SerializeField] protected float jumpForce = 17;
     [SerializeField] private float lowJumpGravityMultiplier = 6f;   // make jump low by increasing gravity on character
 
     /* FIELDS PUBLIC FOR OTHER SCRIPTS */
@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     protected Animator animator;
     //private DinoSoundPlayer charSfxPlayer;
     // INTERNAL INSTANCE MEMBERS
-    private Vector2 bodyVelocity;
+    protected Vector2 bodyVelocity;
     private float gravity;                          // general gravity on body
 
     protected float moveDirection = 0f;               // direction in which character is moving
@@ -159,7 +159,7 @@ public class Player : MonoBehaviour
 		transform.Translate(moveAmount);
 	}
 
-    private void OnJumpDown()
+    protected void OnJumpDown()
     {
         //onGround = raycastController.collision.below
         if (onGround)

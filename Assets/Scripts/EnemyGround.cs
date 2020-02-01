@@ -6,6 +6,7 @@ public class EnemyGround : Player
 {
     public Transform target;
 
+    // Update is called once per frame
     void Update()
     {
         // TODO: add 0.1 error checking to remove glitching
