@@ -145,9 +145,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   moveSmoothing: 0.01
+  sprintMultiplier: 1.5
   jumpForce: 17
   lowJumpGravityMultiplier: 6
   onGround: 0
+  disableControls: 0
+  facingRight: 0
 --- !u!114 &7806076703749118527
 MonoBehaviour:
   m_ObjectHideFlags: 0

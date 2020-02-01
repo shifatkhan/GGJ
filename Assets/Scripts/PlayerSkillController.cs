@@ -28,20 +28,6 @@ public class PlayerSkillController : MonoBehaviour
     {
         if (Input.GetButtonDown("Tab"))
             dashPressed = true;
-
-
-        /*if (Input.GetButtonDown("Transcend"))
-            transcendPressTime = Time.time;
-        else if (Input.GetButton("Transcend") && Time.time - transcendPressTime > 4 && )
-        {  // held longer than 1.5 seconds
-            useTranscend();
-            transcendPressTime = 0f;
-        }
-        else
-        {
-            transcendPressTime = float.PositiveInfinity;
-
-        }*/
     }
 
     void FixedUpdate()
@@ -85,11 +71,6 @@ public class PlayerSkillController : MonoBehaviour
         StartCoroutine(suspendControls(animationTime));
         // add force to player's rigid body
         player.pushBody(bodyVelocity, 1000f, animationTime);
-    }
-
-    private void useTranscend()
-    {
-        Debug.Log("SWITCHU");
     }
 
     IEnumerator suspendControls(float time)
