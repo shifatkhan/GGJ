@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2971415867669608327}
   - component: {fileID: -8423331922545878786}
   - component: {fileID: -4139497501624561188}
+  - component: {fileID: -3875420428207624428}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -215,3 +216,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   repairedGrid: {fileID: 0}
   brokenGrid: {fileID: 0}
+--- !u!114 &-3875420428207624428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2971415867669608328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33521a8ee533fd749bb32983777dd52a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
