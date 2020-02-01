@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2971415867669608323}
   - component: {fileID: 2971415867669608324}
   - component: {fileID: 2971415867669608325}
+  - component: {fileID: 582366528032661969}
   - component: {fileID: 2971415867669608326}
   - component: {fileID: 2971415867669608327}
   m_Layer: 0
@@ -109,6 +110,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.2, y: 2.01}
   m_EdgeRadius: 0
+--- !u!95 &582366528032661969
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2971415867669608328}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &2971415867669608326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,10 +141,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6539da6b62fab7f4489bd1c0938cdc10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 350
+  moveSpeed: 10
   moveSmoothing: 0.01
-  jumpForce: 8
-  lowJumpGravityMultiplier: 2
+  jumpForce: 17
+  lowJumpGravityMultiplier: 6
   onGround: 0
 --- !u!114 &2971415867669608327
 MonoBehaviour:
@@ -140,5 +160,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   showRaycast: 0

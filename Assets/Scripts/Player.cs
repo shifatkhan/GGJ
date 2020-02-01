@@ -10,10 +10,10 @@ public class Player : MonoBehaviour
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /* EDITABLE IN INSPECTOR */
-    [SerializeField] private float moveSpeed = 350f;
+    [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float moveSmoothing = 0.01f;           // time that takes to move character (read docs on SmoothDamp)
-    [SerializeField] private float jumpForce = 8;
-    [SerializeField] private float lowJumpGravityMultiplier = 2f;   // make jump low by increasing gravity on character
+    [SerializeField] private float jumpForce = 17;
+    [SerializeField] private float lowJumpGravityMultiplier = 6f;   // make jump low by increasing gravity on character
 
     /* FIELDS PUBLIC FOR OTHER SCRIPTS */
     [HideInInspector] public bool onGround;
@@ -67,8 +67,8 @@ public class Player : MonoBehaviour
         GetPlayerInput();
 
         // update animator
-        animator.SetFloat("runningSpeed", Mathf.Abs(moveDirection));
-        animator.SetBool("isKicking", interactPressed);
+        //animator.SetFloat("runningSpeed", Mathf.Abs(moveDirection));
+        //animator.SetBool("isKicking", interactPressed);
 
         // update sound
         //if(charSfxPlayer != null)
@@ -101,9 +101,9 @@ public class Player : MonoBehaviour
         moveDirection = Input.GetAxisRaw("Horizontal");     // 1 = moving right, -1 = moving left, 0 = idle
         if (Input.GetButtonDown("Jump"))
             jumpPressed = true;
-        if (Input.GetButtonDown("Interact"))
-            interactPressed = true;
-        animator.SetBool("isCrouching", Input.GetButton("Crouch"));
+        //if (Input.GetButtonDown("Interact"))
+        //    interactPressed = true;
+        //animator.SetBool("isCrouching", Input.GetButton("Crouch"));
     }
 
     // Calculate the velocity of player's game object based their state
