@@ -114,9 +114,9 @@ public class RaycastController : MonoBehaviour
 
 			//Create raycast
 			RaycastHit2D hit = Physics2D.Raycast (rayOrigin, rayDirection, rayLength, collisionMask);
-
-			//Shows raycast in scene viewer
-			if(showRaycast) Debug.DrawRay (rayOrigin, rayDirection, Color.red);
+           
+            //Shows raycast in scene viewer
+            if (showRaycast) Debug.DrawRay (rayOrigin, rayDirection, Color.red);
 
 			if (hit) {
 				//If already colliding with obstacle, leave as is.
@@ -153,15 +153,15 @@ public class RaycastController : MonoBehaviour
 			rayOrigin += Vector2.right * (raySpacing_v * i + moveAmount.x);
 			RaycastHit2D hit = Physics2D.Raycast (rayOrigin, rayDirection, rayLength, collisionMask);
 
-			if(showRaycast) Debug.DrawRay (rayOrigin, rayDirection, Color.red);
+            if (showRaycast) Debug.DrawRay (rayOrigin, rayDirection, Color.red);
 
 			//If collision found, update moveAmount.y by reducing the change in velocity
 			if (hit) {
 				moveAmount.y = (hit.distance - widthBuffer) * directionY;
 				rayLength = hit.distance;
 
-				//Set collision bool
-				collision.below = (directionY == -1);
+                //Set collision bool
+                collision.below = (directionY == -1);
 				collision.above = (directionY == 1);
 			}
 		}
