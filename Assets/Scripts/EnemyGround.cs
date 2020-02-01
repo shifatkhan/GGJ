@@ -5,21 +5,28 @@ using UnityEngine;
 public class EnemyGround : Player
 {
     public Transform target;
+    public LayerMask targetCollisionMask;
     public static bool isAttacking = false;
+
+    public Collider2D attackHitbox;
 
     // Update is called once per frame
     void Update()
     {
         if (!isAttacking)
         {
-            // TODO: add 0.1 error checking to remove glitching
-            if (target.position.x < transform.position.x)
+            if (target.position.x - transform.position.x < -0.8)
             {
                 moveDirection = -1.0f;
             }
-            else if (target.position.x > transform.position.x)
+            else if (target.position.x - transform.position.x > 0.8)
             {
                 moveDirection = 1.0f;
+            }
+            else
+            {
+                // Enemy is at the same position as the target.
+                moveDirection = 0f;
             }
         }
         else
@@ -55,5 +62,17 @@ public class EnemyGround : Player
 
         //Checks current state of game obj and makes adjustment to velocity if necessary
         CheckState();
+    }
+
+    public void Attack()
+    {
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.layerMask = targetCollisionMask;
+
+
+        Collider2D[] hit = new Collider2D[2];
+        Physics2D.OverlapCollider(attackHitbox, filter, hit);
+
+        Debug.Log(hit[1].transform.tag);
     }
 }
