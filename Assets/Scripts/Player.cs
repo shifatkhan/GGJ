@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     protected Rigidbody2D rBody;
     //private DinoSoundPlayer charSfxPlayer;
     // INTERNAL INSTANCE MEMBERS
-    private Vector2 bodyVelocity;
+    protected Vector2 bodyVelocity;
     private float gravity;                          // general gravity on body
 
     protected float moveDirection = 0f;             // direction in which character is moving
@@ -159,7 +159,7 @@ public class Player : MonoBehaviour
 		transform.Translate(moveAmount);
 	}
 
-    private void OnJumpDown()
+    protected void OnJumpDown()
     {
         //onGround = raycastController.collision.below
         if (onGround)
