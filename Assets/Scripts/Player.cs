@@ -17,18 +17,20 @@ public class Player : MonoBehaviour
 
     /* FIELDS PUBLIC FOR OTHER SCRIPTS */
     [HideInInspector] public bool onGround;
+    [HideInInspector] public bool disableControls = false;
 
     // COMPONENTS, SCRIPTS, AND OBJECT REFERENCES
-    private RaycastController raycastController;
-    private SpriteRenderer spriteRenderer;
-    private Animator animator;
+    protected RaycastController raycastController;
+    protected SpriteRenderer spriteRenderer;
+    protected Animator animator;
     //private DinoSoundPlayer charSfxPlayer;
     // INTERNAL INSTANCE MEMBERS
     private Vector2 bodyVelocity;
     private float gravity;                          // general gravity on body
 
-    private float moveDirection = 0f;               // direction in which character is moving
+    protected float moveDirection = 0f;               // direction in which character is moving
     private float velocityXSmoothing;               // a reference for SmoothDamp method to use
+    private bool sprintHeld = false;
 
     private bool jumpPressed = false;
     private bool isJumping = false;            
@@ -98,21 +100,30 @@ public class Player : MonoBehaviour
     // Get player's input to determine action states
     private void GetPlayerInput()
     {
-        moveDirection = Input.GetAxisRaw("Horizontal");     // 1 = moving right, -1 = moving left, 0 = idle
-        if (Input.GetButtonDown("Jump"))
-            jumpPressed = true;
-        //if (Input.GetButtonDown("Interact"))
-        //    interactPressed = true;
-        //animator.SetBool("isCrouching", Input.GetButton("Crouch"));
+        if(!disableControls)
+        {
+            moveDirection = Input.GetAxisRaw("Horizontal");     // 1 = moving right, -1 = moving left, 0 = idle
+            sprintHeld = Input.GetButton("Sprint");
+            if (Input.GetButtonDown("Jump"))
+                jumpPressed = true;
+            //if (Input.GetButtonDown("Interact"))
+            //    interactPressed = true;
+            //animator.SetBool("isCrouching", Input.GetButton("Crouch"));
+        }
+        else
+        {
+            moveDirection = 0.0f;
+        }
     }
 
     // Calculate the velocity of player's game object based their state
-    private void calcBodyVelocity()
+    protected void calcBodyVelocity()
     {
         // gravity makes game object fall at all times
         bodyVelocity.y += gravity * Time.deltaTime;
         // calculate horizontal movement with smoothdamp
         float targetXPosition = moveDirection * moveSpeed;
+        if (sprintHeld) targetXPosition *= 1.5f;
         bodyVelocity.x = Mathf.SmoothDamp(bodyVelocity.x, targetXPosition, ref velocityXSmoothing, moveSmoothing); // Params: current position, target position, current velocity (modified by func), time to reach target (smaller = faster)
 
         // modify player's falling gravity if jumping
@@ -179,7 +190,7 @@ public class Player : MonoBehaviour
     }
 
     // This method checks the state of the player game object every frame
-    private void CheckState ()
+    protected void CheckState ()
 	{
         onGround = raycastController.collision.below;
 
