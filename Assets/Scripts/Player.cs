@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     protected RaycastController raycastController;
     protected SpriteRenderer spriteRenderer;
     protected Animator animator;
+    protected Rigidbody2D rBody;
     //private DinoSoundPlayer charSfxPlayer;
     // INTERNAL INSTANCE MEMBERS
     protected Vector2 bodyVelocity;
@@ -55,6 +56,7 @@ public class Player : MonoBehaviour
         raycastController = GetComponent<RaycastController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        rBody = GetComponent<Rigidbody2D>();
         //charSfxPlayer = GetComponent<DinoSoundPlayer>();
     }
 
@@ -111,10 +113,6 @@ public class Player : MonoBehaviour
             //if (Input.GetButtonDown("Interact"))
             //    interactPressed = true;
             //animator.SetBool("isCrouching", Input.GetButton("Crouch"));
-        }
-        else
-        {
-            moveDirection = 0.0f;
         }
     }
 
@@ -189,7 +187,7 @@ public class Player : MonoBehaviour
         raycastController.collision.collDirection = (int)Mathf.Sign(moveDirection);
         // flip sprite
         spriteRenderer.flipX = !spriteRenderer.flipX;
-        facingRight = spriteRenderer.flipX;
+        facingRight = !spriteRenderer.flipX;
     }
 
     // This method checks the state of the player game object every frame
@@ -217,13 +215,30 @@ public class Player : MonoBehaviour
 		spriteRenderer.color = c;
 	}
 
-	
+    // Push the rigid body of player
+    public void pushBody(Vector2 direction, float force, float animTime)
+    {
+        // temporarily activate rigidbody's physics and disable after animation
+        StartCoroutine(tempAddRigidBodyWeight(animTime));
+        rBody.AddForce(direction * force);
+    }
 
-	/// <summary>
-	/// Resets the invincble boolean. Used by OnTriggerEnter2D, to return player to vulnerable state 
-	/// after slight moment of invincibility.
-	/// </summary>
-	private void resetInvincible ()
+    IEnumerator tempAddRigidBodyWeight(float time)
+    {
+        rBody.mass = 1f;
+        yield return new WaitForSeconds(time);
+        rBody.mass = 0.0001f;
+    }
+
+
+
+
+
+    /// <summary>
+    /// Resets the invincble boolean. Used by OnTriggerEnter2D, to return player to vulnerable state 
+    /// after slight moment of invincibility.
+    /// </summary>
+    private void resetInvincible ()
 	{
 		invincible = false;
 	}

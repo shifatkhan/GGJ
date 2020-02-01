@@ -25,7 +25,7 @@ public class PlayerSkillController : MonoBehaviour
     void Update()
     {
         if (Input.GetButtonDown("Tab"))
-            tabPressed = true;          // TODO add false
+            tabPressed = true;
     }
 
     void FixedUpdate()
@@ -49,19 +49,34 @@ public class PlayerSkillController : MonoBehaviour
         disableSkills = false;
     }
 
+    private void resetAllSkillInputs()
+    {
+        tabPressed = false;
+    }
+
     private void useDash()
     {
-        disableAllControls();
+        // TODO deduct stam
 
-        // calculate dash movement with smoothdamp
+        // find direction of dash
         float moveDirection = 1f;   // 1 = right, -1 = left; default as facing right
         if (!player.facingRight)
             moveDirection = -1f;
 
-        /*float targetXPosition = moveDirection * moveSpeed;
-        if (sprintHeld) targetXPosition *= 1.5f;
-        bodyVelocity.x = Mathf.SmoothDamp(bodyVelocity.x, targetXPosition, ref velocityXSmoothing, moveSmoothing);
-        player.Move*/
+        Vector2 bodyVelocity = new Vector2(moveDirection, 0f);
+        float animationTime = 0.2f;
+        // temporarily disable all controls until skill is over
+        StartCoroutine(suspendControls(animationTime));
+        // add force to player's rigid body
+        player.pushBody(bodyVelocity, 1000f, animationTime);
+    }
+
+    IEnumerator suspendControls(float time)
+    {
+        disableAllControls();
+        yield return new WaitForSeconds(time);
+        enableAllControls();
+        resetAllSkillInputs();
     }
 
 }
