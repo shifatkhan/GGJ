@@ -11450,6 +11450,11 @@ PrefabInstance:
       propertyPath: playerHealth
       value: 
       objectReference: {fileID: 717905871}
+    - target: {fileID: 6751918356379283769, guid: aac24c62b2a0fdf48a7007187edaff86,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 717905871}
     - target: {fileID: 7556165596602241729, guid: aac24c62b2a0fdf48a7007187edaff86,
         type: 3}
       propertyPath: playerHealth

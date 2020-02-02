@@ -24,8 +24,7 @@ public class StaminaBar : MonoBehaviour
             fillImage.enabled = true;
         }
 
-        // float fillValue = player.stamina / player.maxStamina;
-        float fillValue = 20;
+        float fillValue = player.stamina / player.maxStamina;
         slider.value = fillValue;
     }
 }
