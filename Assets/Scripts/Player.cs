@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     protected Vector2 bodyVelocity;
     private float gravity;                          // general gravity on body
 
-    protected float moveDirection = 0f;             // direction in which character is moving
+    public float moveDirection = 0f;             // direction in which character is moving
     private float velocityXSmoothing;               // a reference for SmoothDamp method to use
     private bool sprintHeld = false;
 
