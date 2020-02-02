@@ -588,7 +588,7 @@ PrefabInstance:
     - target: {fileID: 1594793941330562985, guid: d833554bba765ec408ff46b941098508,
         type: 3}
       propertyPath: newLevel
-      value: Scene2
+      value: LevelOneScene
       objectReference: {fileID: 0}
     - target: {fileID: 1594793941330562987, guid: d833554bba765ec408ff46b941098508,
         type: 3}

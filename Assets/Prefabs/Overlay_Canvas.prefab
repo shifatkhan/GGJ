@@ -921,7 +921,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7116214694715049854}
   - component: {fileID: 2388065957685591610}
-  - component: {fileID: 7556165596602241729}
+  - component: {fileID: 1768009334118961481}
   m_Layer: 5
   m_Name: StamSlider
   m_TagString: Untagged
@@ -1000,7 +1000,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7556165596602241729
+--- !u!114 &1768009334118961481
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1009,11 +1009,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5141757018726556595}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3509bb38b285b1a4f8d99a82c70143e8, type: 3}
+  m_Script: {fileID: 11500000, guid: a99f0d8339cc618439469e5f1dd901e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: {fileID: 0}
-  fillImage: {fileID: 631966265016772412}
 --- !u!1 &5861843694739816552
 GameObject:
   m_ObjectHideFlags: 0
