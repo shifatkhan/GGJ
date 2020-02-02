@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float sprintMultiplier = 1.5f;         // multiply moving speed when sprinting
     [SerializeField] private float jumpForce = 17;
     [SerializeField] private float lowJumpGravityMultiplier = 6f;   // make jump low by increasing gravity on character
+    [SerializeField] private float staminaRegen = 0.5f;
 
     /* FIELDS PUBLIC FOR OTHER SCRIPTS */
     [HideInInspector] public bool onGround;
@@ -46,6 +47,8 @@ public class Player : MonoBehaviour
     /* STATS */
     public float health = 100;
     public float maxHealth;
+    public float stamina = 100;
+    public float maxStamina;
     
     private bool invincible = false;
     private bool hurt;
@@ -60,6 +63,7 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         rBody = GetComponent<Rigidbody2D>();
         maxHealth = health;
+        maxStamina = stamina;
         //charSfxPlayer = GetComponent<DinoSoundPlayer>();
     }
 
@@ -75,6 +79,9 @@ public class Player : MonoBehaviour
 	{
         if(!hurt)
             GetPlayerInput();
+
+        if (stamina < 100)
+            stamina += staminaRegen;
 
         // update animator
         animator.SetFloat("runningSpeed", Mathf.Abs(moveDirection));
@@ -311,5 +318,12 @@ public class Player : MonoBehaviour
             invincible = true;
             Invoke("resetInvincible", invulnerableTime);
         }
+    }
+
+    public void UseStamina(float amount)
+    {
+        //Receive damage
+        stamina -= amount;
+        
     }
 }

@@ -34,7 +34,7 @@ public class PlayerSkillController : MonoBehaviour
     void Update()
     {
         // Dash input
-        if (Input.GetButtonDown("Tab"))
+        if (Input.GetButtonDown("Tab") && player.stamina >= 30)
             dashPressed = true;
 
         if (Input.GetKeyDown("q"))
@@ -90,6 +90,7 @@ public class PlayerSkillController : MonoBehaviour
         StartCoroutine(suspendControls(animationTime));
         // add force to player's rigid body
         player.pushBody(bodyVelocity, 700f);
+        player.UseStamina(30);
 
         // Revert back to custom physics after animation
         StartCoroutine(tempAddRigidBodyWeight(animationTime));
