@@ -20468,6 +20468,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Overlay_Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4021649896192471687, guid: aac24c62b2a0fdf48a7007187edaff86,
+        type: 3}
+      propertyPath: m_Name
+      value: Health Slider
+      objectReference: {fileID: 0}
     - target: {fileID: 6751918356379283769, guid: aac24c62b2a0fdf48a7007187edaff86,
         type: 3}
       propertyPath: playerHealth
