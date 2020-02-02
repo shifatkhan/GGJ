@@ -490,7 +490,7 @@ PrefabInstance:
     - target: {fileID: 1594793941330562985, guid: d833554bba765ec408ff46b941098508,
         type: 3}
       propertyPath: newLevel
-      value: Scene2
+      value: LevelThreeScene
       objectReference: {fileID: 0}
     - target: {fileID: 1594793941330562987, guid: d833554bba765ec408ff46b941098508,
         type: 3}
@@ -20670,6 +20670,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Overlay_Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021649896192471687, guid: aac24c62b2a0fdf48a7007187edaff86,
+        type: 3}
+      propertyPath: m_Name
+      value: Health Slider
       objectReference: {fileID: 0}
     - target: {fileID: 6751918356379283769, guid: aac24c62b2a0fdf48a7007187edaff86,
         type: 3}
