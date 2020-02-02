@@ -15,6 +15,9 @@ public class EnemyFlying : MonoBehaviour
 
     [SerializeField] private int attackDamage = 20;
 
+    public int health = 1500;
+    public int maxHealth = 1500;
+
     // Called before Start
     private void Awake()
     {
@@ -25,6 +28,10 @@ public class EnemyFlying : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
         if (!isAttacking)
         {
             aIPath.canMove = true;
@@ -71,5 +78,11 @@ public class EnemyFlying : MonoBehaviour
                 c.gameObject.GetComponent<Player>().ReceiveDamage(attackDamage);
             }
         }
+    }
+
+    public void ReceiveDamage(int damage)
+    {
+            health -= damage;
+            Debug.Log("HEALTH: " + health);
     }
 }

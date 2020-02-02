@@ -7,9 +7,14 @@ public class PlayerSkillController : MonoBehaviour
     [SerializeField] private float stopTime = 0.5f;
     [SerializeField] private float dropForce = 0.1f;
 
+    public LayerMask targetCollisionMask;
+    [SerializeField] private int attackDamage = 20;
+
     private Player player;
     private Rigidbody2D rb;
     private bool disableSkills = false;
+
+    protected Animator animator;
 
     // Skill states
     private bool dashPressed = false;
@@ -17,11 +22,15 @@ public class PlayerSkillController : MonoBehaviour
     private float transcendPressTime;
 
     private bool doGroundPound = false;
+    private bool isGroundpounding = false;
+
+    public Collider2D attackHitbox;
 
     private void Awake()
     {
         player = GetComponent<Player>();
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -41,9 +50,13 @@ public class PlayerSkillController : MonoBehaviour
         {
             if (!player.onGround)
             {
+                Debug.Log("GP pressed");
                 doGroundPound = true;
             }
         }
+
+        if (Input.GetKeyDown("w"))
+            animator.SetTrigger("attack_w"); ;
     }
 
     void FixedUpdate()
@@ -53,7 +66,7 @@ public class PlayerSkillController : MonoBehaviour
             if (dashPressed) useDash();
             dashPressed = false;
 
-            if (doGroundPound) GroundPoundAttack();
+            if (doGroundPound && !isGroundpounding) GroundPoundAttack();
             doGroundPound = false;
         }
     }
@@ -98,6 +111,8 @@ public class PlayerSkillController : MonoBehaviour
     // Do the Ground Pound attack
     private void GroundPoundAttack()
     {
+        Debug.Log("GP called");
+        isGroundpounding = true;
         StopAndSpin();
         StartCoroutine("DropAndSmash");
     }
@@ -105,8 +120,11 @@ public class PlayerSkillController : MonoBehaviour
     // Animation at the start of a ground pound attack (spin in the air)
     private void StopAndSpin()
     {
+        Debug.Log("GP StopAndSpin");
         ClearForces();
         rb.gravityScale = 0;
+        animator.SetTrigger("isSpinning");
+        //player.pushBody(Vector2.up, 0.08f);
     }
 
     // After a few seconds (after the stop and spin) drop down.
@@ -114,20 +132,52 @@ public class PlayerSkillController : MonoBehaviour
     {
         yield return new WaitForSeconds(stopTime);
         player.pushBody(Vector2.down, dropForce);
+        Debug.Log("GP DropAndSmash");
+        //animator.SetBool("isDropping", true);
     }
 
     // Player has dropped onto the ground.
     private void CompleteGroundPound()
     {
         StartCoroutine(tempAddRigidBodyWeight(0.0f));
+        player.setPhysicsEnabled(true);
+        isGroundpounding = false;
+        //animator.SetBool("isDropping", false);
+        Debug.Log("GP COMPLETES");
     }
 
     private void ClearForces()
     {
+        Debug.Log("GP ClearForces");
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0;
 
         player.bodyVelocity = Vector2.zero;
+        player.setPhysicsEnabled(false);
+    }
+
+    public void Attack_W()
+    {
+        Debug.Log("ATTACK W");
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.SetLayerMask(targetCollisionMask);
+        filter.useLayerMask = true;
+
+        Collider2D[] hit = new Collider2D[16];
+        Physics2D.OverlapCollider(attackHitbox, filter, hit);
+
+        // Check all collisions with attack. TODO: Check if it has same tag as Target
+        foreach (Collider2D c in hit)
+        {
+            if (c != null && c.transform != null & c.gameObject != null && c.transform.CompareTag("enemy"))
+            {
+                Debug.Log("ATTACKED: "+c.transform.tag);
+                if(c.gameObject.GetComponent<EnemyGround>() != null)
+                    c.gameObject.GetComponent<EnemyGround>().ReceiveDamage(attackDamage);
+                else if (c.gameObject.GetComponent<EnemyFlying>() != null)
+                    c.gameObject.GetComponent<EnemyFlying>().ReceiveDamage(attackDamage);
+            }
+        }
     }
 
     IEnumerator suspendControls(float time)
@@ -143,7 +193,6 @@ public class PlayerSkillController : MonoBehaviour
         rb.mass = 1f;
         yield return new WaitForSeconds(time);
         rb.mass = 0.0001f;
-        ClearForces();
     }
 
     private void OnCollisionEnter2D(Collision2D other)

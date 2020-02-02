@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: player_attack_overhand
+  m_Name: player_spin
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,16 +20,16 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 1460603255664568255, guid: 1355a8aa1a2052e4691dff24904553ac,
+      value: {fileID: -1394527152228223720, guid: 1355a8aa1a2052e4691dff24904553ac,
         type: 3}
     - time: 0.16666667
-      value: {fileID: 6743096067385053398, guid: 1355a8aa1a2052e4691dff24904553ac,
+      value: {fileID: 3154423721751135380, guid: 1355a8aa1a2052e4691dff24904553ac,
         type: 3}
     - time: 0.33333334
-      value: {fileID: -2549233721657181880, guid: 1355a8aa1a2052e4691dff24904553ac,
+      value: {fileID: -1099163315959880021, guid: 1355a8aa1a2052e4691dff24904553ac,
         type: 3}
     - time: 0.5
-      value: {fileID: 7081805965666925738, guid: 1355a8aa1a2052e4691dff24904553ac,
+      value: {fileID: 5743002360071119732, guid: 1355a8aa1a2052e4691dff24904553ac,
         type: 3}
     attribute: m_Sprite
     path: 
@@ -50,10 +50,10 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 1460603255664568255, guid: 1355a8aa1a2052e4691dff24904553ac, type: 3}
-    - {fileID: 6743096067385053398, guid: 1355a8aa1a2052e4691dff24904553ac, type: 3}
-    - {fileID: -2549233721657181880, guid: 1355a8aa1a2052e4691dff24904553ac, type: 3}
-    - {fileID: 7081805965666925738, guid: 1355a8aa1a2052e4691dff24904553ac, type: 3}
+    - {fileID: -1394527152228223720, guid: 1355a8aa1a2052e4691dff24904553ac, type: 3}
+    - {fileID: 3154423721751135380, guid: 1355a8aa1a2052e4691dff24904553ac, type: 3}
+    - {fileID: -1099163315959880021, guid: 1355a8aa1a2052e4691dff24904553ac, type: 3}
+    - {fileID: 5743002360071119732, guid: 1355a8aa1a2052e4691dff24904553ac, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -78,11 +78,4 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 0.16666667
-    functionName: Attack_W
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []

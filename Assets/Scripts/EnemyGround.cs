@@ -15,6 +15,12 @@ public class EnemyGround : Player
     // Update is called once per frame
     void Update()
     {
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
+
+        invincibleEnabled = false;
         if (!isAttacking)
         {
             if (target.position.x - transform.position.x < -0.8)

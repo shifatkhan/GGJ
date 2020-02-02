@@ -44,7 +44,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.689811, y: 0.022237778}
+  m_Offset: {x: -0.3525076, y: 0.18535185}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -55,7 +55,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.4686308, y: 1.7561188}
+  m_Size: {x: 3.1432376, y: 2.082347}
   m_EdgeRadius: 0
 --- !u!1 &6530160982282975900
 GameObject:
@@ -233,13 +233,11 @@ MonoBehaviour:
   onGround: 0
   disableControls: 0
   facingRight: 0
+  bodyVelocity: {x: 0, y: 0}
+  moveDirection: 0
   health: 100
   maxHealth: 0
-  enemyCollisionMask:
-    serializedVersion: 2
-    m_Bits: 8192
-  isAttacking: 0
-  attackHitbox: {fileID: 0}
+  invincibleEnabled: 1
 --- !u!114 &6530160982282975891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +266,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9473dd9a6692e25409ffa0eb3f7cef16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stopTime: 0.2
+  dropForce: 2
+  targetCollisionMask:
+    serializedVersion: 2
+    m_Bits: 8192
+  attackDamage: 20
+  attackHitbox: {fileID: 222845873}
 --- !u!114 &3832229967265881288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +287,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   repairedGrid: {fileID: 0}
   brokenGrid: {fileID: 0}
+  lever: {fileID: 0}
+  isRepairedGrid: 0
   karma: 0
   maxKarma: 0
 --- !u!114 &4149189143396884992

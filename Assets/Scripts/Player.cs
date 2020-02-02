@@ -41,6 +41,8 @@ public class Player : MonoBehaviour
 
     private bool interactPressed = false;
 
+    private bool physicsEnabled = true;
+
 
     // TODO re-evaluate fields to use?
     /* STATS */
@@ -48,9 +50,10 @@ public class Player : MonoBehaviour
     public float maxHealth;
     
     private bool invincible = false;
+    public bool invincibleEnabled = true;
     private bool hurt;
     private int coins; //Not sure which should keep track of coins for now.
-	private float invulnerableTime = 2f;
+	private float invulnerableTime = 1.5f;
 
     // Called before Start
     private void Awake()
@@ -60,6 +63,7 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         rBody = GetComponent<Rigidbody2D>();
         maxHealth = health;
+        
         //charSfxPlayer = GetComponent<DinoSoundPlayer>();
     }
 
@@ -68,6 +72,7 @@ public class Player : MonoBehaviour
 	{
 		// Kinematic formula, solve for acceleration going down
 		gravity = -(2 * 2.5f) / Mathf.Pow (0.36f, 2);
+        physicsEnabled = true;
     }
 	
 	// Update is called once per frame
@@ -101,8 +106,12 @@ public class Player : MonoBehaviour
 
             if (interactPressed) OnInteract();
 
-            calcBodyVelocity();
-            Move(bodyVelocity * Time.deltaTime);
+            if (physicsEnabled)
+            {
+                calcBodyVelocity();
+                Move(bodyVelocity * Time.deltaTime);
+            }
+            
         }
         
         //Checks current state of game obj and makes adjustment to velocity if necessary
@@ -130,26 +139,27 @@ public class Player : MonoBehaviour
     // Calculate the velocity of player's game object based their state
     protected void calcBodyVelocity()
     {
-        // gravity makes game object fall at all times
-        bodyVelocity.y += gravity * Time.deltaTime;
-        // calculate horizontal movement with smoothdamp
-        float targetXPosition = moveDirection * moveSpeed;
-        if (sprintHeld) targetXPosition *= sprintMultiplier;
-        bodyVelocity.x = Mathf.SmoothDamp(bodyVelocity.x, targetXPosition, ref velocityXSmoothing, moveSmoothing); // Params: current position, target position, current velocity (modified by func), time to reach target (smaller = faster)
+        
+            // gravity makes game object fall at all times
+            bodyVelocity.y += gravity * Time.deltaTime;
+            // calculate horizontal movement with smoothdamp
+            float targetXPosition = moveDirection * moveSpeed;
+            if (sprintHeld) targetXPosition *= sprintMultiplier;
+            bodyVelocity.x = Mathf.SmoothDamp(bodyVelocity.x, targetXPosition, ref velocityXSmoothing, moveSmoothing); // Params: current position, target position, current velocity (modified by func), time to reach target (smaller = faster)
 
-        // modify player's falling gravity if jumping
-        if (isJumping)
-        {
-            // do a low jump by raising gravity even when ascending if player performs a low jump
-            // note we substract -1 with multiplier because engine already apply 1 multiple of gravity 
+            // modify player's falling gravity if jumping
+            if (isJumping)
+            {
+                // do a low jump by raising gravity even when ascending if player performs a low jump
+                // note we substract -1 with multiplier because engine already apply 1 multiple of gravity 
 
-            // low jump
-            if (bodyVelocity.y > 0 && !Input.GetButton("Jump"))
-                bodyVelocity += Vector2.up * Physics2D.gravity.y * (lowJumpGravityMultiplier - 1) * Time.fixedDeltaTime;
-            // high jump
-            else if (bodyVelocity.y < 0)
-                bodyVelocity += Vector2.up * Physics2D.gravity.y * (fallGravityMultiplier - 1) * Time.fixedDeltaTime;
-        }
+                // low jump
+                if (bodyVelocity.y > 0 && !Input.GetButton("Jump"))
+                    bodyVelocity += Vector2.up * Physics2D.gravity.y * (lowJumpGravityMultiplier - 1) * Time.fixedDeltaTime;
+                // high jump
+                else if (bodyVelocity.y < 0)
+                    bodyVelocity += Vector2.up * Physics2D.gravity.y * (fallGravityMultiplier - 1) * Time.fixedDeltaTime;
+            }
     }
 
     // Moves the player. Raycast checks for walls and floors collision.
@@ -229,7 +239,7 @@ public class Player : MonoBehaviour
 		//Apparantly, Color isn't something you can modify like transform.position
 		//Reduce transparency by half when hurt.
 		Color c = spriteRenderer.color;
-		if (invincible) 
+		if (invincible && invincibleEnabled) 
 			c.a = 0.5f;
 		else 
 			c.a = 1f;
@@ -267,6 +277,10 @@ public class Player : MonoBehaviour
 		hurt = false;
 	}
 
+    public void setPhysicsEnabled(bool enable)
+    {
+        physicsEnabled = enable;
+    }
 
     /// <summary>
     /// This trigger will check for collision with traps. Not the level.
@@ -304,9 +318,13 @@ public class Player : MonoBehaviour
             hurt = true;
             Invoke("resetHurt", 0.2f);
 
-            //Become invulnerable for 2 seconds
-            invincible = true;
-            Invoke("resetInvincible", invulnerableTime);
+            if (invincibleEnabled)
+            {
+                //Become invulnerable for 2 seconds
+                invincible = true;
+                Invoke("resetInvincible", invulnerableTime);
+            }
+            
         }
     }
 }
