@@ -21894,6 +21894,11 @@ PrefabInstance:
 
         Pause'
       objectReference: {fileID: 0}
+    - target: {fileID: 857492400435416705, guid: e526ddfd247ebe748a826f30a67565bf,
+        type: 3}
+      propertyPath: m_FontData.m_BestFit
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 857492401022482048, guid: e526ddfd247ebe748a826f30a67565bf,
         type: 3}
       propertyPath: m_Name
@@ -22015,6 +22020,11 @@ PrefabInstance:
 
         DeeAndre Mac Andrew'
       objectReference: {fileID: 0}
+    - target: {fileID: 857492401900755050, guid: e526ddfd247ebe748a826f30a67565bf,
+        type: 3}
+      propertyPath: m_FontData.m_BestFit
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 857492402445533030, guid: e526ddfd247ebe748a826f30a67565bf,
         type: 3}
       propertyPath: m_Text
@@ -22037,6 +22047,11 @@ PrefabInstance:
         T
 
         ESC'
+      objectReference: {fileID: 0}
+    - target: {fileID: 857492402445533030, guid: e526ddfd247ebe748a826f30a67565bf,
+        type: 3}
+      propertyPath: m_FontData.m_BestFit
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e526ddfd247ebe748a826f30a67565bf, type: 3}
