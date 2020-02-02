@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 6103805126735337853}
   m_Layer: 0
   m_Name: Skeleton
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -240,8 +240,11 @@ MonoBehaviour:
   onGround: 0
   disableControls: 0
   facingRight: 0
+  health: 100
+  maxHealth: 0
   target: {fileID: 0}
   targetCollisionMask:
     serializedVersion: 2
     m_Bits: 4096
   attackHitbox: {fileID: 901662311}
+  attackDamage: 10
