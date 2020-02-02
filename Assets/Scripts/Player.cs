@@ -52,6 +52,12 @@ public class Player : MonoBehaviour
     private int coins; //Not sure which should keep track of coins for now.
 	private float invulnerableTime = 2f;
 
+    // Attacking logic
+    public LayerMask enemyCollisionMask;
+    public bool isAttacking = false;
+
+    public Collider2D attackHitbox;
+
     // Called before Start
     private void Awake()
     {
