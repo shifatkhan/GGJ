@@ -44,7 +44,9 @@ public class Player : MonoBehaviour
 
     // TODO re-evaluate fields to use?
     /* STATS */
-    private int health;
+    public float health;
+    public float maxHealth;
+    
     private bool invincible;
     private bool hurt;
     private int coins; //Not sure which should keep track of coins for now.
