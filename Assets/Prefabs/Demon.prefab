@@ -88,6 +88,8 @@ GameObject:
   - component: {fileID: 1458633719}
   - component: {fileID: 1458633720}
   - component: {fileID: 488359286066268156}
+  - component: {fileID: 5113752104046107215}
+  - component: {fileID: 7535850335382118943}
   m_Layer: 0
   m_Name: Demon
   m_TagString: Untagged
@@ -189,7 +191,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.004191354, y: -0.08286576}
@@ -252,13 +254,13 @@ MonoBehaviour:
   canSearch: 1
   canMove: 1
   maxSpeed: 2
-  gravity: {x: NaN, y: NaN, z: NaN}
+  gravity: {x: 0, y: 0, z: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 4294967295
   centerOffsetCompatibility: NaN
   orientation: 1
-  enableRotation: 1
+  enableRotation: 0
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
@@ -269,3 +271,33 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
+--- !u!114 &5113752104046107215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5929025253744458239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  target: {fileID: 0}
+--- !u!114 &7535850335382118943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5929025253744458239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd399b4e164aa8046bd2e0c15f17a99b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetCollisionMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  attackHitbox: {fileID: 1102193984}

@@ -149,8 +149,20 @@ public class Player : MonoBehaviour
         raycastController.collision.Reset();
 
         // Flips player sprite and raycast if character turns direction
-        if (spriteRenderer.flipX ? (moveDirection > 0) : (moveDirection < 0))       // 1 = moving right, -1 = moving left, 0 = idle
+        //if (spriteRenderer.flipX ? (moveDirection > 0) : (moveDirection < 0))       // 1 = moving right, -1 = moving left, 0 = idle
+        //    FlipFacingDirection();
+        if(moveDirection < 0)
+        {
+            transform.localScale = new Vector3(transform.localScale.x > 0 ? transform.localScale.x * -1f : transform.localScale.x,
+                transform.localScale.y, transform.localScale.z);
             FlipFacingDirection();
+        }
+        else if(moveDirection > 0)
+        {
+            transform.localScale = new Vector3(transform.localScale.x < 0 ? transform.localScale.x * -1f : transform.localScale.x,
+                transform.localScale.y, transform.localScale.z);
+            FlipFacingDirection();
+        }
 
         // Check collisions - if found, moveAmount velocity will be reduced appropriately
         raycastController.checkCollisions(ref moveAmount);
@@ -186,8 +198,8 @@ public class Player : MonoBehaviour
         // flip raycast
         raycastController.collision.collDirection = (int)Mathf.Sign(moveDirection);
         // flip sprite
-        spriteRenderer.flipX = !spriteRenderer.flipX;
-        facingRight = !spriteRenderer.flipX;
+        //spriteRenderer.flipX = !spriteRenderer.flipX;
+        facingRight = transform.localScale.x < 0;
     }
 
     // This method checks the state of the player game object every frame

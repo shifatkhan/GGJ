@@ -17,10 +17,12 @@ public class EnemyGround : Player
         {
             if (target.position.x - transform.position.x < -0.8)
             {
+                // Moving left
                 moveDirection = -1.0f;
             }
             else if (target.position.x - transform.position.x > 0.8)
             {
+                // Moving right
                 moveDirection = 1.0f;
             }
             else
@@ -67,11 +69,17 @@ public class EnemyGround : Player
     public void Attack()
     {
         ContactFilter2D filter = new ContactFilter2D();
-        filter.layerMask = targetCollisionMask;
+        filter.SetLayerMask(targetCollisionMask);
+        filter.useLayerMask = true;
 
-        Collider2D[] hit = new Collider2D[2];
+        Collider2D[] hit = new Collider2D[16];
         Physics2D.OverlapCollider(attackHitbox, filter, hit);
-
-        Debug.Log(hit[1].transform.tag);
+        
+        // Check all collisions with attack. TODO: Check if it has same tag as Target
+        foreach (Collider2D c in hit)
+        {
+            if(c != null && c.transform != null & c.gameObject != null)
+                Debug.Log(c.transform.tag);
+        }
     }
 }
