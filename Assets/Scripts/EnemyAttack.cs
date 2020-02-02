@@ -4,12 +4,24 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
+    EnemyGround enemyGround;
+    EnemyFlying enemyFlying; 
+
+    void Start()
+    {
+        enemyGround = transform.parent.GetComponent<EnemyGround>();
+        enemyFlying = transform.parent.GetComponent<EnemyFlying>();
+    }
+
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.CompareTag("Player"))
         {
-            EnemyGround.isAttacking = true;
-            EnemyFlying.isAttacking = true;
+            if(enemyGround != null)
+                enemyGround.isAttacking = true;
+
+            if (enemyFlying != null)
+                enemyFlying.isAttacking = true;
         }
     }
 
@@ -17,8 +29,11 @@ public class EnemyAttack : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("Player"))
         {
-            EnemyGround.isAttacking = false;
-            EnemyFlying.isAttacking = false;
+            if (enemyGround != null)
+                enemyGround.isAttacking = false;
+
+            if (enemyFlying != null)
+                enemyFlying.isAttacking = false;
         }
     }
 }
