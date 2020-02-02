@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class PlayerSkillController : MonoBehaviour
 {
+    [SerializeField] private float stopTime = 0.5f;
+    [SerializeField] private float dropForce = 0.1f;
+
     private Player player;
+    private Rigidbody2D rb;
     private bool disableSkills = false;
 
     // Skill states
@@ -12,9 +16,12 @@ public class PlayerSkillController : MonoBehaviour
     private bool transcendPressed = false;
     private float transcendPressTime;
 
+    private bool doGroundPound = false;
+
     private void Awake()
     {
         player = GetComponent<Player>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Start is called before the first frame update
@@ -26,8 +33,17 @@ public class PlayerSkillController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Dash input
         if (Input.GetButtonDown("Tab"))
             dashPressed = true;
+
+        if (Input.GetKeyDown("q"))
+        {
+            if (!player.onGround)
+            {
+                doGroundPound = true;
+            }
+        }
     }
 
     void FixedUpdate()
@@ -36,6 +52,9 @@ public class PlayerSkillController : MonoBehaviour
         {
             if (dashPressed) useDash();
             dashPressed = false;
+
+            if (doGroundPound) GroundPoundAttack();
+            doGroundPound = false;
         }
     }
 
@@ -66,11 +85,49 @@ public class PlayerSkillController : MonoBehaviour
             moveDirection = -1f;
 
         Vector2 bodyVelocity = new Vector2(moveDirection, 0f);
-        float animationTime = 0.2f;
+        float animationTime = 0.25f;
         // temporarily disable all controls until skill is over
         StartCoroutine(suspendControls(animationTime));
         // add force to player's rigid body
-        player.pushBody(bodyVelocity, 1000f, animationTime);
+        player.pushBody(bodyVelocity, 700f);
+
+        // Revert back to custom physics after animation
+        StartCoroutine(tempAddRigidBodyWeight(animationTime));
+    }
+
+    // Do the Ground Pound attack
+    private void GroundPoundAttack()
+    {
+        StopAndSpin();
+        StartCoroutine("DropAndSmash");
+    }
+
+    // Animation at the start of a ground pound attack (spin in the air)
+    private void StopAndSpin()
+    {
+        ClearForces();
+        rb.gravityScale = 0;
+    }
+
+    // After a few seconds (after the stop and spin) drop down.
+    private IEnumerator DropAndSmash()
+    {
+        yield return new WaitForSeconds(stopTime);
+        player.pushBody(Vector2.down, dropForce);
+    }
+
+    // Player has dropped onto the ground.
+    private void CompleteGroundPound()
+    {
+        StartCoroutine(tempAddRigidBodyWeight(0.0f));
+    }
+
+    private void ClearForces()
+    {
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0;
+
+        player.bodyVelocity = Vector2.zero;
     }
 
     IEnumerator suspendControls(float time)
@@ -79,6 +136,22 @@ public class PlayerSkillController : MonoBehaviour
         yield return new WaitForSeconds(time);
         enableAllControls();
         resetAllSkillInputs();
+    }
+
+    IEnumerator tempAddRigidBodyWeight(float time)
+    {
+        rb.mass = 1f;
+        yield return new WaitForSeconds(time);
+        rb.mass = 0.0001f;
+        ClearForces();
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.contacts[0].normal.y >= 0.5)
+        {
+            CompleteGroundPound();
+        }
     }
 
 }

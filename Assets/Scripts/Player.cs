@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     /* FIELDS PUBLIC FOR OTHER SCRIPTS */
     [HideInInspector] public bool onGround;
     [HideInInspector] public bool disableControls = false;
-    [HideInInspector] public bool facingRight;
+    [HideInInspector] public bool facingRight = true;
 
     // COMPONENTS, SCRIPTS, AND OBJECT REFERENCES
     protected RaycastController raycastController;
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     protected Rigidbody2D rBody;
     //private DinoSoundPlayer charSfxPlayer;
     // INTERNAL INSTANCE MEMBERS
-    protected Vector2 bodyVelocity;
+    public Vector2 bodyVelocity;
     private float gravity;                          // general gravity on body
 
     protected float moveDirection = 0f;             // direction in which character is moving
@@ -51,12 +51,6 @@ public class Player : MonoBehaviour
     private bool hurt;
     private int coins; //Not sure which should keep track of coins for now.
 	private float invulnerableTime = 2f;
-
-    // Attacking logic
-    public LayerMask enemyCollisionMask;
-    public bool isAttacking = false;
-
-    public Collider2D attackHitbox;
 
     // Called before Start
     private void Awake()
@@ -217,7 +211,7 @@ public class Player : MonoBehaviour
         raycastController.collision.collDirection = (int)Mathf.Sign(moveDirection);
         // flip sprite
         //spriteRenderer.flipX = !spriteRenderer.flipX;
-        facingRight = transform.localScale.x < 0;
+        facingRight = transform.localScale.x > 0;
     }
 
     // This method checks the state of the player game object every frame
@@ -244,10 +238,8 @@ public class Player : MonoBehaviour
 	}
 
     // Push the rigid body of player
-    public void pushBody(Vector2 direction, float force, float animTime)
+    public void pushBody(Vector2 direction, float force)
     {
-        // temporarily activate rigidbody's physics and disable after animation
-        StartCoroutine(tempAddRigidBodyWeight(animTime));
         rBody.AddForce(direction * force);
     }
 
@@ -257,10 +249,6 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(time);
         rBody.mass = 0.0001f;
     }
-
-
-
-
 
     /// <summary>
     /// Resets the invincble boolean. Used by OnTriggerEnter2D, to return player to vulnerable state 
