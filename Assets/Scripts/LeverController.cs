@@ -14,7 +14,7 @@ public class LeverController : MonoBehaviour
     }
     private void Update()
     {
-        if (interactAllowed && Input.GetKeyDown("r"))
+        if (interactAllowed && Input.GetButtonDown("Submit"))
         {
             UseLever();
         }

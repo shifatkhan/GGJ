@@ -6,17 +6,25 @@ using UnityEngine.SceneManagement;
 public class SceneChanger : MonoBehaviour
 {
     [SerializeField] private string newLevel;
-    private Animator animator;
+    private bool interactAllowed;
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        interactAllowed = false;
     }
-    void OnTriggerEnter2D(Collider2D other)
+    private void Update()
     {
-        if (other.CompareTag("Player") && (animator.GetBool("leverActivated")))
-        {
+        if (interactAllowed && Input.GetButtonDown("Submit"))
             SceneManager.LoadScene(newLevel);
-        }
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+            interactAllowed = true;
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+            interactAllowed = false;
     }
 }
