@@ -6,7 +6,7 @@ using Pathfinding;
 public class EnemyFlying : MonoBehaviour
 {
     public LayerMask targetCollisionMask;
-    public static bool isAttacking = false;
+    public bool isAttacking = false;
 
     protected Animator animator;
     private AIPath aIPath;

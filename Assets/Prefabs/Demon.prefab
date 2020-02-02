@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 488359286066268156}
   - component: {fileID: 5113752104046107215}
   - component: {fileID: 7535850335382118943}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Demon
   m_TagString: enemy
   m_Icon: {fileID: 0}
@@ -300,5 +300,6 @@ MonoBehaviour:
   targetCollisionMask:
     serializedVersion: 2
     m_Bits: 4096
+  isAttacking: 0
   attackHitbox: {fileID: 1102193984}
   attackDamage: 20

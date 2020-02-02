@@ -6,7 +6,7 @@ public class EnemyGround : Player
 {
     public Transform target;
     public LayerMask targetCollisionMask;
-    public static bool isAttacking = false;
+    public bool isAttacking = false;
 
     public Collider2D attackHitbox;
 
