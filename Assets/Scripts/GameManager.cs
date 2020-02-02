@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown("e") && (karma > karmaCost))
+        if (Input.GetKeyDown("r") && (karma > karmaCost))
         {
             ChangeTileSet();
         }
