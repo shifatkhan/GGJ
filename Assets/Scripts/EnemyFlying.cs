@@ -13,6 +13,8 @@ public class EnemyFlying : MonoBehaviour
 
     public Collider2D attackHitbox;
 
+    [SerializeField] private int attackDamage = 20;
+
     // Called before Start
     private void Awake()
     {
@@ -63,8 +65,11 @@ public class EnemyFlying : MonoBehaviour
         // Check all collisions with attack. TODO: Check if it has same tag as Target
         foreach (Collider2D c in hit)
         {
-            if (c != null && c.transform != null & c.gameObject != null)
+            if (c != null && c.transform != null & c.gameObject != null && c.transform.CompareTag("Player"))
+            {
                 Debug.Log(c.transform.tag);
+                c.gameObject.GetComponent<Player>().ReceiveDamage(attackDamage);
+            }
         }
     }
 }

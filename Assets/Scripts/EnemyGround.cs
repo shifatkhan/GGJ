@@ -10,6 +10,8 @@ public class EnemyGround : Player
 
     public Collider2D attackHitbox;
 
+    [SerializeField] private int attackDamage = 10;
+
     // Update is called once per frame
     void Update()
     {
@@ -78,8 +80,11 @@ public class EnemyGround : Player
         // Check all collisions with attack. TODO: Check if it has same tag as Target
         foreach (Collider2D c in hit)
         {
-            if(c != null && c.transform != null & c.gameObject != null)
-                Debug.Log(c.transform.tag);
+            if(c != null && c.transform != null & c.gameObject != null && c.transform.CompareTag("Player"))
+            {
+               Debug.Log(c.transform.tag);
+               c.gameObject.GetComponent<Player>().ReceiveDamage(attackDamage);
+            }
         }
     }
 }

@@ -44,10 +44,10 @@ public class Player : MonoBehaviour
 
     // TODO re-evaluate fields to use?
     /* STATS */
-    public float health;
+    public float health = 100;
     public float maxHealth;
     
-    private bool invincible;
+    private bool invincible = false;
     private bool hurt;
     private int coins; //Not sure which should keep track of coins for now.
 	private float invulnerableTime = 2f;
@@ -59,6 +59,7 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rBody = GetComponent<Rigidbody2D>();
+        maxHealth = health;
         //charSfxPlayer = GetComponent<DinoSoundPlayer>();
     }
 
@@ -72,7 +73,8 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-        GetPlayerInput();
+        if(!hurt)
+            GetPlayerInput();
 
         // update animator
         //animator.SetFloat("runningSpeed", Mathf.Abs(moveDirection));
@@ -91,14 +93,17 @@ public class Player : MonoBehaviour
     // FixedUpdate is called at a fixed interval, all physics code should be in here only
     void FixedUpdate()
     {
-        if (jumpPressed) OnJumpDown();
-        jumpPressed = false;
+        if (!hurt)
+        {
+            if (jumpPressed) OnJumpDown();
+            jumpPressed = false;
 
-        if (interactPressed) OnInteract();
+            if (interactPressed) OnInteract();
 
-        calcBodyVelocity();
-        Move(bodyVelocity * Time.deltaTime);
-
+            calcBodyVelocity();
+            Move(bodyVelocity * Time.deltaTime);
+        }
+        
         //Checks current state of game obj and makes adjustment to velocity if necessary
         CheckState();
     }
@@ -286,14 +291,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ReceiveDamage()
+    public void ReceiveDamage(int damage)
     {
         if (!invincible)
         {
-            //rBody.velocity.y = 0;
-            animator.Play("g_dino_damaged");
+            bodyVelocity.y = 0;
+            //animator.Play("damaged");
             //Receive damage
-            health--;
+            health -= damage;
             Debug.Log("HEALTH: " + health);
 
             //Makes slight pause and prevent player from moving when hit

@@ -301,3 +301,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   attackHitbox: {fileID: 1102193984}
+  attackDamage: 20
