@@ -69,7 +69,6 @@ public class EnemyGround : Player
         ContactFilter2D filter = new ContactFilter2D();
         filter.layerMask = targetCollisionMask;
 
-
         Collider2D[] hit = new Collider2D[2];
         Physics2D.OverlapCollider(attackHitbox, filter, hit);
 
