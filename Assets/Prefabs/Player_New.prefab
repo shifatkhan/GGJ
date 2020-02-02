@@ -18,9 +18,9 @@ GameObject:
   - component: {fileID: 8698997432597452266}
   - component: {fileID: 3832229967265881288}
   - component: {fileID: 4149189143396884992}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Player_New
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -170,12 +170,12 @@ MonoBehaviour:
   moveSpeed: 7
   moveSmoothing: 0.01
   sprintMultiplier: 1.5
-  jumpForce: 17
+  jumpForce: 19
   lowJumpGravityMultiplier: 6
   onGround: 0
   disableControls: 0
   facingRight: 0
-  health: 0
+  health: 100
   maxHealth: 0
 --- !u!114 &6530160982282975891
 MonoBehaviour:
@@ -192,7 +192,7 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 256
-  showRaycast: 0
+  showRaycast: 1
 --- !u!114 &8698997432597452266
 MonoBehaviour:
   m_ObjectHideFlags: 0

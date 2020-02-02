@@ -77,7 +77,8 @@ public class Player : MonoBehaviour
             GetPlayerInput();
 
         // update animator
-        //animator.SetFloat("runningSpeed", Mathf.Abs(moveDirection));
+        animator.SetFloat("runningSpeed", Mathf.Abs(moveDirection));
+        animator.SetBool("isJumping", isJumping);
         //animator.SetBool("isKicking", interactPressed);
 
         // update sound
@@ -116,7 +117,10 @@ public class Player : MonoBehaviour
             moveDirection = Input.GetAxisRaw("Horizontal");     // 1 = moving right, -1 = moving left, 0 = idle
             sprintHeld = Input.GetButton("Sprint");
             if (Input.GetButtonDown("Jump"))
+            {
                 jumpPressed = true;
+                
+            }
             //if (Input.GetButtonDown("Interact"))
             //    interactPressed = true;
             //animator.SetBool("isCrouching", Input.GetButton("Crouch"));
@@ -190,6 +194,7 @@ public class Player : MonoBehaviour
             {
                 bodyVelocity = Vector2.up * jumpForce;
                 isJumping = true;
+                
             }
         }
     }
