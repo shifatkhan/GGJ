@@ -290,15 +290,18 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ReceiveDamage(int damage)
+    public void ReceiveDamage(int damage, float enemyXPos)
     {
         if (!invincible)
         {
             bodyVelocity.y = 0;
+            if (enemyXPos < transform.position.x)    // attacked from left side
+                pushBody(new Vector2(1, 0.5f), 0.02f);
+            else                                    // attacked from right side
+                pushBody(new Vector2(-1, 0.5f), 0.02f);
             //animator.Play("damaged");
             //Receive damage
             health -= damage;
-            Debug.Log("HEALTH: " + health);
 
             //Makes slight pause and prevent player from moving when hit
             hurt = true;

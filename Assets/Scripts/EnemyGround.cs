@@ -82,8 +82,7 @@ public class EnemyGround : Player
         {
             if(c != null && c.transform != null & c.gameObject != null && c.transform.CompareTag("Player"))
             {
-               Debug.Log(c.transform.tag);
-               c.gameObject.GetComponent<Player>().ReceiveDamage(attackDamage);
+               c.gameObject.GetComponent<Player>().ReceiveDamage(attackDamage, transform.position.x);
             }
         }
     }
