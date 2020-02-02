@@ -10,9 +10,10 @@ public class GameManager : MonoBehaviour
     private bool isRepairedGrid;
 
     //Variables to control the karma/duration of other world swap
-    private int karma;
-    private int karmaCost = 20;
-    private int karmaUsage = 1; //Change to a timed system or smth
+    public float karma;
+    public float maxKarma;
+    private float karmaCost = 20f;
+    private float karmaUsage = 0.5f; //Change to a timed system or smth
 
     void Start()
     {
@@ -21,12 +22,13 @@ public class GameManager : MonoBehaviour
         repairedGrid.SetActive(false);
 
         //Change base karma later
-        karma = 100;
+        karma = 100f;
+        maxKarma = 100f;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown("e") && (karma > karmaCost))
+        if (Input.GetKeyDown("r") && (karma > karmaCost))
         {
             ChangeTileSet();
         }
@@ -34,7 +36,7 @@ public class GameManager : MonoBehaviour
         {
             karma -= karmaUsage;
 
-            if (karma == 0)
+            if (karma == 0.0)
             {
                 ChangeTileSet();
             }

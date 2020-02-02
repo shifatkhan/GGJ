@@ -44,8 +44,10 @@ public class Player : MonoBehaviour
 
     // TODO re-evaluate fields to use?
     /* STATS */
-    private int health;
-    private bool invincible;
+    public float health = 100;
+    public float maxHealth;
+    
+    private bool invincible = false;
     private bool hurt;
     private int coins; //Not sure which should keep track of coins for now.
 	private float invulnerableTime = 2f;
@@ -57,6 +59,7 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rBody = GetComponent<Rigidbody2D>();
+        maxHealth = health;
         //charSfxPlayer = GetComponent<DinoSoundPlayer>();
     }
 
@@ -70,10 +73,12 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-        GetPlayerInput();
+        if(!hurt)
+            GetPlayerInput();
 
         // update animator
-        //animator.SetFloat("runningSpeed", Mathf.Abs(moveDirection));
+        animator.SetFloat("runningSpeed", Mathf.Abs(moveDirection));
+        animator.SetBool("isJumping", isJumping);
         //animator.SetBool("isKicking", interactPressed);
 
         // update sound
@@ -89,14 +94,17 @@ public class Player : MonoBehaviour
     // FixedUpdate is called at a fixed interval, all physics code should be in here only
     void FixedUpdate()
     {
-        if (jumpPressed) OnJumpDown();
-        jumpPressed = false;
+        if (!hurt)
+        {
+            if (jumpPressed) OnJumpDown();
+            jumpPressed = false;
 
-        if (interactPressed) OnInteract();
+            if (interactPressed) OnInteract();
 
-        calcBodyVelocity();
-        Move(bodyVelocity * Time.deltaTime);
-
+            calcBodyVelocity();
+            Move(bodyVelocity * Time.deltaTime);
+        }
+        
         //Checks current state of game obj and makes adjustment to velocity if necessary
         CheckState();
     }
@@ -109,7 +117,10 @@ public class Player : MonoBehaviour
             moveDirection = Input.GetAxisRaw("Horizontal");     // 1 = moving right, -1 = moving left, 0 = idle
             sprintHeld = Input.GetButton("Sprint");
             if (Input.GetButtonDown("Jump"))
+            {
                 jumpPressed = true;
+                
+            }
             //if (Input.GetButtonDown("Interact"))
             //    interactPressed = true;
             //animator.SetBool("isCrouching", Input.GetButton("Crouch"));
@@ -149,8 +160,20 @@ public class Player : MonoBehaviour
         raycastController.collision.Reset();
 
         // Flips player sprite and raycast if character turns direction
-        if (spriteRenderer.flipX ? (moveDirection > 0) : (moveDirection < 0))       // 1 = moving right, -1 = moving left, 0 = idle
+        //if (spriteRenderer.flipX ? (moveDirection > 0) : (moveDirection < 0))       // 1 = moving right, -1 = moving left, 0 = idle
+        //    FlipFacingDirection();
+        if(moveDirection < 0)
+        {
+            transform.localScale = new Vector3(transform.localScale.x > 0 ? transform.localScale.x * -1f : transform.localScale.x,
+                transform.localScale.y, transform.localScale.z);
             FlipFacingDirection();
+        }
+        else if(moveDirection > 0)
+        {
+            transform.localScale = new Vector3(transform.localScale.x < 0 ? transform.localScale.x * -1f : transform.localScale.x,
+                transform.localScale.y, transform.localScale.z);
+            FlipFacingDirection();
+        }
 
         // Check collisions - if found, moveAmount velocity will be reduced appropriately
         raycastController.checkCollisions(ref moveAmount);
@@ -171,6 +194,7 @@ public class Player : MonoBehaviour
             {
                 bodyVelocity = Vector2.up * jumpForce;
                 isJumping = true;
+                
             }
         }
     }
@@ -186,8 +210,8 @@ public class Player : MonoBehaviour
         // flip raycast
         raycastController.collision.collDirection = (int)Mathf.Sign(moveDirection);
         // flip sprite
-        spriteRenderer.flipX = !spriteRenderer.flipX;
-        facingRight = !spriteRenderer.flipX;
+        //spriteRenderer.flipX = !spriteRenderer.flipX;
+        facingRight = transform.localScale.x < 0;
     }
 
     // This method checks the state of the player game object every frame
@@ -272,14 +296,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ReceiveDamage()
+    public void ReceiveDamage(int damage)
     {
         if (!invincible)
         {
-            //rBody.velocity.y = 0;
-            animator.Play("g_dino_damaged");
+            bodyVelocity.y = 0;
+            //animator.Play("damaged");
             //Receive damage
-            health--;
+            health -= damage;
             Debug.Log("HEALTH: " + health);
 
             //Makes slight pause and prevent player from moving when hit

@@ -9,6 +9,7 @@ public class EnemyAttack : MonoBehaviour
         if (collider.gameObject.CompareTag("Player"))
         {
             EnemyGround.isAttacking = true;
+            EnemyFlying.isAttacking = true;
         }
     }
 
@@ -17,8 +18,7 @@ public class EnemyAttack : MonoBehaviour
         if (collider.gameObject.CompareTag("Player"))
         {
             EnemyGround.isAttacking = false;
+            EnemyFlying.isAttacking = false;
         }
     }
-
-    
 }

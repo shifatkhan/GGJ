@@ -858,7 +858,7 @@ GameObject:
   - component: {fileID: 8924586680127608660}
   - component: {fileID: 8559225437266593926}
   m_Layer: 31
-  m_Name: New Palette
+  m_Name: forest_palette
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
