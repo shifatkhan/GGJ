@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject repairedGrid;
     [SerializeField] private GameObject brokenGrid;
 
-    private bool isRepairedGrid;
+    public bool isRepairedGrid;
 
     //Variables to control the karma/duration of other world swap
     public int karma;
