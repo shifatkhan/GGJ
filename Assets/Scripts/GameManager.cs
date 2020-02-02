@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     private bool isRepairedGrid;
 
     //Variables to control the karma/duration of other world swap
-    private int karma;
+    public int karma;
+    public int maxKarma;
     private int karmaCost = 20;
     private int karmaUsage = 1; //Change to a timed system or smth
 
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
 
         //Change base karma later
         karma = 100;
+        maxKarma = 100;
     }
 
     void Update()

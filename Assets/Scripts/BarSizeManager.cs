@@ -1,17 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BarSizeManager : MonoBehaviour
 {
-    private Transform bar;
-
-    private void Start()
+    public Player playerHealth;
+    public Image fillImage;
+    private Slider slider;
+    
+    void Awake()
     {
-        bar = transform.Find("bar");
+        slider = GetComponent<Slider>();
     }
-    public void SetSize(float sizeNormalized)
+    void Update()
     {
-        bar.localScale = new Vector3(sizeNormalized, 1f);
+        if (slider.value <= slider.minValue)
+        {
+            fillImage.enabled = false;
+        }
+        if (slider.value > slider.minValue && !fillImage.enabled)
+        {
+            fillImage.enabled = true;
+        }
+
+        float fillValue = playerHealth.health / playerHealth.maxHealth;
+        slider.value = fillValue;
     }
 }
