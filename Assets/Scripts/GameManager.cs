@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject repairedGrid;
     [SerializeField] private GameObject brokenGrid;
-
+    [SerializeField] private GameObject lever;
     public bool isRepairedGrid;
 
     //Variables to control the karma/duration of other world swap
@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        if (lever != null)
+            lever.SetActive(false);
+
         isRepairedGrid = false;
         brokenGrid.SetActive(true);
         repairedGrid.SetActive(false);
@@ -28,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown("r") && (karma > karmaCost))
+        if (Input.GetButtonDown("Transcend") && (karma > karmaCost))
         {
             ChangeTileSet();
         }
@@ -53,11 +56,17 @@ public class GameManager : MonoBehaviour
         {
             repairedGrid.SetActive(false);
             brokenGrid.SetActive(true);
+
+            if (lever != null)
+                lever.SetActive(false);
         }
         else
         {
             brokenGrid.SetActive(false);
             repairedGrid.SetActive(true);
+
+            if (lever != null)
+                lever.SetActive(true);
         }
 
         isRepairedGrid = !isRepairedGrid;
