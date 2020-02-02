@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BarSizeManager : MonoBehaviour
 {
-    public Player playerHealth;
+    public Player player;
     public Image fillImage;
     private Slider slider;
     
@@ -24,7 +24,7 @@ public class BarSizeManager : MonoBehaviour
             fillImage.enabled = true;
         }
 
-        float fillValue = playerHealth.health / playerHealth.maxHealth;
+        float fillValue = player.health / player.maxHealth;
         slider.value = fillValue;
     }
 }
