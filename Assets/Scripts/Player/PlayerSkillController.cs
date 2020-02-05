@@ -89,6 +89,7 @@ public class PlayerSkillController : MonoBehaviour
         dashPressed = false;
     }
 
+    // TODO: Fix dash making player unable to jump (makes box collider vibrate AKA make player !onGround for a few frames)
     private void useDash()
     {
         // TODO deduct stam
@@ -99,7 +100,7 @@ public class PlayerSkillController : MonoBehaviour
             moveDirection = -1f;
 
         Vector2 bodyVelocity = new Vector2(moveDirection, 0f);
-        float animationTime = 0.25f;
+        float animationTime = 0.15f;
         // temporarily disable all controls until skill is over
         StartCoroutine(suspendControls(animationTime));
         // add force to player's rigid body
