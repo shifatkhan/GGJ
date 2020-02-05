@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public float karma;
     public float maxKarma;
     private float karmaCost = 20f;
-    private float karmaUsage = 0.5f; //Change to a timed system or smth
+    private float karmaUsage = 20f; //Change to a timed system or smth
 
     void Start()
     {
@@ -37,16 +37,16 @@ public class GameManager : MonoBehaviour
         }
         if (isRepairedGrid)
         {
-            karma -= karmaUsage;
+            karma -= karmaUsage * Time.deltaTime;
 
-            if (karma == 0.0)
+            if (karma <= 0)
             {
                 ChangeTileSet();
             }
         }
         else if (!isRepairedGrid && karma < 100)
         {
-            karma += karmaUsage;
+            karma += karmaUsage * Time.deltaTime;
         }
     }
     //Swaps the active tileset
