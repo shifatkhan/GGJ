@@ -17,10 +17,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelOneScene.unity
     guid: 94eb79f6b686ef4409bb1dfff54c058b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Scene2.unity
     guid: 5540ed468c09a3941b3d9bda17aa5bed
   - enabled: 1
     path: Assets/Scenes/TaqiScene.unity
     guid: e21c5d50a384f724e8c6cccd9d199b09
+  - enabled: 1
+    path: Assets/Scenes/LevelThreeScene.unity
+    guid: abb5f3fb3c309b343a16ebb3f13ccad5
+  - enabled: 1
+    path: Assets/Scenes/final_screen.unity
+    guid: cbae48392872a764b923252248c86a3d
   m_configObjects: {}
